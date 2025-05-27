@@ -112,7 +112,6 @@ async def embed_pdf(req: EmbedPDFRequest = Depends()):
         for chunk in chunks:
             ids.append(str(uuid.uuid4()))
             embed_data.append(chunk.page_content)
-            print(chunk.page_content)
 
         ollama_client.embed(OLLAMA_EMBED_MODEL, input=embed_data)
 

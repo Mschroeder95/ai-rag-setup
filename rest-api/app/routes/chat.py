@@ -40,7 +40,6 @@ async def post_chat(req: ChatRequest):
 
     query_result = coll.query(query_embeddings=embedding["embeddings"], n_results=5)
     general_data = query_result["documents"]
-    print(general_data)
 
     chat_history = get_chat_history(collection_name=collection_name, chat_id=chat_id)
     messages = [
@@ -59,19 +58,13 @@ async def post_chat(req: ChatRequest):
     full_chat = []
     full_chat.extend(chat_history)
     full_chat.extend(messages)
-    print(full_chat)
-    print("model: ", OLLAMA_MODEL)
     output: ChatResponse = ollama_client.chat(
         model=OLLAMA_MODEL, messages=full_chat, format=ChatResponseFormat.model_json_schema()
     )
 
     full_chat.append(output.message.model_dump())
-    print(output)
-
-    print(full_chat)
     await update_chat_history(collection_name, chat_id, full_chat)
 
     assistant_response = ChatResponseFormat(**json.loads(output.message.content))
-    print(assistant_response)
 
     return {'assistant_response': assistant_response.assistant_response, 'chat_history': full_chat}
