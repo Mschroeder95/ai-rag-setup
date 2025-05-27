@@ -1,0 +1,45 @@
+services:
+  ollama_ai_rag:
+    image: ollama/ollama
+    container_name: ollama_ai_rag
+    gpus: all
+    volumes:
+      - ollama_ai_rag:/root/.ollama
+    ports:
+      - "11434:11434"
+    environment:
+      - OLLAMA_MODEL
+      - OLLAMA_EMBED_MODEL
+
+  chromadb_ai_rag:
+    image: chromadb/chroma:1.0.10
+    container_name: chromadb_ai_rag
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data_ai_rag:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=TRUE
+
+  fastapi_ai_rag:
+    build:
+      context: ./rest-api
+      dockerfile: Dockerfile
+    image: my-fastapi:latest
+    container_name: fastapi_ai_rag
+    environment:
+      - OLLAMA_HOST=http://ollama_ai_rag:11434
+      - OLLAMA_MODEL
+      - OLLAMA_EMBED_MODEL
+      - CHROMA_SERVER_HOST=chromadb_ai_rag
+      - CHROMA_SERVER_PORT=8000
+    ports:
+      - "8000:80"
+    depends_on:
+      - ollama_ai_rag
+      - chromadb_ai_rag
+
+volumes:
+  ollama_ai_rag:
+  chroma_data_ai_rag:

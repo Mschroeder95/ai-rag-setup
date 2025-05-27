@@ -1,0 +1,9 @@
+fastapi==0.115.9
+pydantic>=2.7.0,<3.0.0
+ollama
+chromadb==1.0.10
+python-multipart
+langchain
+langchain-text-splitters
+langchain-community
+pypdf

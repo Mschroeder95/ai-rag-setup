@@ -1,0 +1,1 @@
+CHAT_HISTORY = 'chat_history'
