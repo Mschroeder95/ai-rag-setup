@@ -107,9 +107,3 @@ The API is fully documented using FastAPI’s interactive Swagger UI.
 ## 📣 Contributions
 
 Feel free to fork and extend this repo. PRs and suggestions are welcome!
-
----
-
-## 🧑‍💻 Author
-
-Built by [@mike-schroeder](https://github.com/mike-schroeder) — passionate about building human-centered AI systems.
