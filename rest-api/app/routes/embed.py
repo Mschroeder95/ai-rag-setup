@@ -62,7 +62,7 @@ async def post_embed_single(req: EmbedRequest):
         insert_ids = [str(uuid.uuid4())]
 
     try:
-        coll.add(
+        coll.upsert(
             ids=insert_ids,
             embeddings=embeddings,
             documents=[req.text],

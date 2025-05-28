@@ -65,7 +65,7 @@ async def post_chat(req: ChatRequest):
 
                 Here is relevant document data:
                 {yaml.safe_dump(general_data)}
-            """,
+            """
     }
 
     # Build the chat messages
@@ -80,7 +80,7 @@ async def post_chat(req: ChatRequest):
         messages=full_chat,
         format=ChatResponseFormat.model_json_schema(),
         options={
-        "num_ctx": 10000,
+        "num_ctx": 8192,
         "num_predict": 2048,
     },
     )
